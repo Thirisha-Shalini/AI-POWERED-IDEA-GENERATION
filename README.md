@@ -1,49 +1,106 @@
-✍️ **InspireWrite - AI-Powered Creative Writing App**
+# ✍️ InspireWrite - AI-Powered Creative Writing Generator
 
-InspireWrite is a simple and beautiful AI-powered tool to generate stories, poems, and dialogues from any creative prompt. Whether you're a writer, student, or just exploring ideas, InspireWrite is here to unlock your imagination.
+Welcome to **InspireWrite**, an AI-enhanced creative writing tool that helps users unleash their imagination through stories, poems, and dialogues — all generated from a single prompt.
 
-**📥 How to Use**
+## 🌟 Features
 
-1. Clone or download the repository:
+- 🔮 Generate **Stories**, **Poems**, or **Dialogues** from your prompt
+- 🧠 Uses HuggingFace API or fallback template-based generation
+- 💡 Suggested creative prompts for quick inspiration
+- ✨ Beautiful, responsive UI with animations
+- 📋 Copy generated content with one click
+- 🔄 Real-time status check of the backend
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/your-username/inspirewrite.git
 cd inspirewrite
+2. Create a virtual environment (optional but recommended)
 
-(Optional) Create a virtual environment and activate it:
 python -m venv venv
+source venv/bin/activate      # Windows: venv\Scripts\activate
+3. Install dependencies
 
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-
-Install dependencies:
 pip install -r requirements.txt
+4. Set up HuggingFace API token (optional)
+Create a .env file in the root directory:
 
-(Optional) Add a .env file with your HuggingFace API key:
+
 HF_TOKEN=your_huggingface_api_token
+Or set it via terminal before running the app:
 
-Run the application:
+
+export HF_TOKEN=your_huggingface_api_token
+5. Run the application
+
 python app.py
+Then open your browser at:
+🌐 http://127.0.0.1:5000
 
-Open your browser and visit:
-http://127.0.0.1:5000
+🧠 API Endpoints
+Method	Endpoint	Description
+GET	/	Loads the creative writing interface
+GET	/health	Server health/status check
+POST	/generate	JSON input → creative text output
 
-✨ What You Can Do
-Enter any creative prompt and choose a format: Story, Poem, or Dialogue
+Sample POST payload:
 
-Try suggested prompts like:
+{
+  "prompt": "A library where books rewrite themselves",
+  "category": "story"
+}
+📁 Project Structure
 
+inspirewrite/
+├── app.py                # Flask app
+├── templates/
+│   └── index.html        # Main HTML file
+├── static/               # CSS/JS (optional)
+├── requirements.txt      # Python dependencies
+├── README.md             # This file
+└── .env                  # Optional token config
+💡 Example Prompts
 A library where books rewrite themselves
+
+The last person on Earth finds a radio signal
 
 Colors that exist only in dreams
 
-Click Generate and let AI do the magic!
+A conversation with your future self
 
-Copy the result with a single click
+The sound of forgotten memories
 
-Check if the backend is online using the built-in status indicator
+📜 License
+This project is licensed under the MIT License.
+
+🤝 Contributing
+Fork the repository
+
+Create your feature branch (git checkout -b feature/YourFeature)
+
+Commit your changes (git commit -m 'Add new feature')
+
+Push to the branch (git push origin feature/YourFeature)
+
+Open a Pull Request
+
+Made with ❤️ to help you imagine more.
+
+yaml
+Copy
+Edit
+
+---
+
+Let me know if you want a `requirements.txt`, `.gitignore`, or GitHub Actions CI workflow file to go with it!
 
 
-📧 Contact
-For feedback, questions, or suggestions, feel free to reach out:
-📬 thirishashalini12@gmail.com
-Or connect via GitHub Issues
+
+
+
+

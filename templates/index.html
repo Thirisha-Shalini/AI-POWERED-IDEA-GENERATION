@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InspireWrite - AI-Powered Creative Writing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .generator-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #333;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+        
+        .category-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 12px 24px;
+            background: rgba(78, 205, 196, 0.1);
+            border: 2px solid #4ecdc4;
+            border-radius: 25px;
+            color: #4ecdc4;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .category-btn:hover::before {
+            left: 100%;
+        }
+        
+        .category-btn:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .category-btn.active {
+            background: #4ecdc4;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .char-counter {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .char-counter.warning {
+            color: #ff6b6b;
+        }
+        
+        .generate-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .generate-btn.loading {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .output-container {
+            margin-top: 20px;
+        }
+        
+        .ai-suggestion {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            color: #333;
+            line-height: 1.8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4ecdc4;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            background: #f0f8ff;
+            border-left-color: #4ecdc4;
+        }
+        
+        .error {
+            background: #fff5f5;
+            border-left-color: #e53e3e;
+            color: #e53e3e;
+        }
+        
+        .success {
+            background: #f0fff4;
+            border-left-color: #38a169;
+            color: #2d3748;
+        }
+        
+        .model-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .copy-btn {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #45b7b8;
+            transform: translateY(-1px);
+        }
+        
+        .suggestions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .suggestion-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .suggestion-item {
+            display: inline-block;
+            background: rgba(78, 205, 196, 0.1);
+            padding: 5px 10px;
+            margin: 3px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .suggestion-item:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .status-online {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-offline {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .generator-section {
+                padding: 20px;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .category-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 200px;
+                text-align: center;
+            }
+            
+            .input-field {
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="status" class="status-indicator status-online">🟢 Online</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">✍️</div>
+                <div class="logo-text">InspireWrite</div>
+            </div>
+            <div class="tagline">Unleash your imagination with AI-powered writing</div>
+        </div>
+
+        <div class="generator-section">
+            <h2 class="section-title">Creative Generator</h2>
+
+            <div class="suggestions">
+                <div class="suggestion-title">💡 Need inspiration? Try these prompts:</div>
+                <span class="suggestion-item" onclick="setSuggestion('A library where books rewrite themselves')">A library where books rewrite themselves</span>
+                <span class="suggestion-item" onclick="setSuggestion('The last person on Earth finds a radio signal')">The last person on Earth finds a radio signal</span>
+                <span class="suggestion-item" onclick="setSuggestion('Colors that exist only in dreams')">Colors that exist only in dreams</span>
+                <span class="suggestion-item" onclick="setSuggestion('A conversation with your future self')">A conversation with your future self</span>
+                <span class="suggestion-item" onclick="setSuggestion('The sound of forgotten memories')">The sound of forgotten memories</span>
+            </div>
+
+            <div class="category-selector">
+                <button class="category-btn active" data-category="story">📖 Story</button>
+                <button class="category-btn" data-category="poem">🎭 Poem</button>
+                <button class="category-btn" data-category="dialogue">💬 Dialogue</button>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Enter your prompt:</label>
+                <textarea id="userInput" class="input-field" placeholder="A world where time flows backwards..."></textarea>
+                <div id="charCounter" class="char-counter">0 / 500</div>
+            </div>
+
+            <button id="generateBtn" class="generate-btn" onclick="sendPrompt()">
+                <span id="btnText">Generate</span>
+            </button>
+
+            <div class="output-container">
+                <div id="output" class="ai-suggestion" style="display: none;"></div>
+                <div id="modelInfo" class="model-info" style="display: none;"></div>
+                <button id="copyBtn" class="copy-btn" style="display: none;" onclick="copyToClipboard()">📋 Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:5000';
+        let currentContent = '';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            checkServerStatus();
+            setInterval(checkServerStatus, 30000); // Check every 30 seconds
+        });
+
+        function setupEventListeners() {
+            // Category button functionality
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    updatePlaceholder();
+                });
+            });
+
+            // Input field enhancements
+            const input = document.getElementById('userInput');
+            input.addEventListener('input', updateCharCounter);
+            input.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    sendPrompt();
+                }
+            });
+
+            updateCharCounter();
+        }
+
+        function updateCharCounter() {
+            const input = document.getElementById('userInput');
+            const counter = document.getElementById('charCounter');
+            const length = input.value.length;
+            
+            counter.textContent = `${length} / 500`;
+            
+            if (length > 450) {
+                counter.classList.add('warning');
+            } else {
+                counter.classList.remove('warning');
+            }
+        }
+
+        function updatePlaceholder() {
+            const activeBtn = document.querySelector('.category-btn.active');
+            const input = document.getElementById('userInput');
+            const category = activeBtn ? activeBtn.dataset.category : 'story';
+            
+            const placeholders = {
+                story: 'A world where time flows backwards...',
+                poem: 'The whispers of autumn leaves...',
+                dialogue: 'Two strangers meet in a mysterious café...'
+            };
+            
+            input.placeholder = placeholders[category];
+        }
+
+        function setSuggestion(text) {
+            document.getElementById('userInput').value = text;
+            updateCharCounter();
+        }
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`, {
+                    method: 'GET',
+                    timeout: 5000
+                });
+                
+                const status = document.getElementById('status');
+                if (response.ok) {
+                    status.textContent = '🟢 Online';
+                    status.className = 'status-indicator status-online';
+                } else {
+                    status.textContent = '🟡 Issues';
+                    status.className = 'status-indicator status-offline';
+                }
+            } catch (error) {
+                const status = document.getElementById('status');
+                status.textContent = '🔴 Offline';
+                status.className = 'status-indicator status-offline';
+            }
+        }
+
+        async function sendPrompt() {
+            const prompt = document.getElementById('userInput').value.trim();
+            const activeBtn = document.querySelector('.category-btn.active');
+            const category = activeBtn ? activeBtn.dataset.category : 'story';
+            
+            if (!prompt) {
+                showOutput('⚠️ Please enter a prompt to generate content.', 'error');
+                return;
+            }
+
+            if (prompt.length > 500) {
+                showOutput('⚠️ Please keep your prompt under 500 characters.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('generateBtn');
+            const btnText = document.getElementById('btnText');
+            
+            // Show loading state
+            btn.disabled = true;
+            btn.classList.add('loading');
+            btnText.textContent = 'Generating...';
+            showOutput('🤖 AI is crafting your creative content...', 'loading');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt, category })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.result) {
+                    showOutput(data.result, 'success');
+                    showModelInfo(data.model_used, data.category);
+                    currentContent = data.result;
+                    document.getElementById('copyBtn').style.display = 'inline-block';
+                } else {
+                    showOutput('⚠️ No content generated. Please try again with a different prompt.', 'error');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showOutput(`⚠️ Connection error: ${error.message}. Please check if the server is running on port 5000.`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('loading');
+                btnText.textContent = 'Generate';
+            }
+        }
+
+        function showOutput(text, type = 'normal') {
+            const output = document.getElementById('output');
+            output.textContent = text;
+            output.style.display = 'block';
+            
+            // Remove all type classes
+            output.classList.remove('loading', 'error', 'success');
+            
+            // Add appropriate class
+            if (type === 'loading') {
+                output.classList.add('loading');
+            } else if (type === 'error') {
+                output.classList.add('error');
+            } else if (type === 'success') {
+                output.classList.add('success');
+            }
+            
+            // Scroll to output
+            output.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function showModelInfo(model, category) {
+            const modelInfo = document.getElementById('modelInfo');
+            if (model && model !== 'fallback') {
+                modelInfo.textContent = `Generated using: ${model} | Category: ${category}`;
+                modelInfo.style.display = 'block';
+            } else if (model === 'fallback') {
+                modelInfo.textContent = `Generated using: Enhanced fallback system | Category: ${category}`;
+                modelInfo.style.display = 'block';
+            } else {
+                modelInfo.style.display = 'none';
+            }
+        }
+
+        function copyToClipboard() {
+            if (currentContent) {
+                navigator.clipboard.writeText(currentContent).then(function() {
+                    const copyBtn = document.getElementById('copyBtn');
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = '✅ Copied!';
+                    copyBtn.style.background = '#38a169';
+                    
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.style.background = '#4ecdc4';
+                    }, 2000);
+                }, function(err) {
+                    console.error('Could not copy text: ', err);
+                    alert('Failed to copy to clipboard');
+                });
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                sendPrompt();
+            }
+            if (e.ctrlKey && e.key === 'c' && currentContent) {
+                copyToClipboard();
+            }
+        });
+
+        // Initialize placeholder
+        updatePlaceholder();
+    </script>
+</body>
+</html>
