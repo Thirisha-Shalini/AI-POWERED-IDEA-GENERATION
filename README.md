@@ -75,8 +75,6 @@ A conversation with your future self
 
 The sound of forgotten memories
 
-📜 License
-This project is licensed under the MIT License.
 
 🤝 Contributing
 Fork the repository
@@ -89,15 +87,6 @@ Push to the branch (git push origin feature/YourFeature)
 
 Open a Pull Request
 
-Made with ❤️ to help you imagine more.
-
-yaml
-Copy
-Edit
-
----
-
-Let me know if you want a `requirements.txt`, `.gitignore`, or GitHub Actions CI workflow file to go with it!
 
 
 
