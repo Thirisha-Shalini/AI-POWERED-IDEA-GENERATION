@@ -1,69 +1,49 @@
+✍️ **InspireWrite - AI-Powered Creative Writing App**
 
-AI-Powered Creative Writing Platform Backend
+InspireWrite is a simple and beautiful AI-powered tool to generate stories, poems, and dialogues from any creative prompt. Whether you're a writer, student, or just exploring ideas, InspireWrite is here to unlock your imagination.
 
-## Features
+**📥 How to Use**
 
-- Story idea generation with AI prompts
-- Multiple writing tools (plot, character, dialogue, etc.)
-- Category-based story suggestions
-- Real-time statistics
-- RESTful API design
-- CORS enabled for frontend integration
+1. Clone or download the repository:
 
-## API Endpoints
-
-### Core Endpoints
-- `GET /` - Home page with API info
-- `GET /api/health` - Health check
-- `POST /api/generate-story` - Generate story ideas
-- `POST /api/use-tool` - Use writing tools
-- `GET /api/stats` - Get platform statistics
-- `POST /api/save-story` - Save story ideas
-
-### Utility Endpoints
-- `GET /api/categories` - Get story categories
-- `GET /api/tools` - Get available tools
-
-## Quick Start
-
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Run the application:
-   ```bash
-   python app.py
-   ```
-
-3. Access the API at `http://localhost:5000`
-
-## Testing
-
-Run tests with:
 ```bash
-python test_app.py
-```
+git clone https://github.com/your-username/inspirewrite.git
+cd inspirewrite
 
-## Environment Variables
+(Optional) Create a virtual environment and activate it:
+python -m venv venv
 
-Create a `.env` file with:
-```
-SECRET_KEY=your-secret-key-here
-FLASK_ENV=development
-FLASK_DEBUG=1
-PORT=5000
-```
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 
-## File Structure
+Install dependencies:
+pip install -r requirements.txt
 
-```
-backend/
-├── app.py              # Main application file
-├── config.py           # Configuration settings
-├── requirements.txt    # Python dependencies
-├── .env               # Environment variables
-├── run.py             # Alternative run script
-├── test_app.py        # Unit tests
-└── README.md          # This file
-```
+(Optional) Add a .env file with your HuggingFace API key:
+HF_TOKEN=your_huggingface_api_token
+
+Run the application:
+python app.py
+
+Open your browser and visit:
+http://127.0.0.1:5000
+
+✨ What You Can Do
+Enter any creative prompt and choose a format: Story, Poem, or Dialogue
+
+Try suggested prompts like:
+
+A library where books rewrite themselves
+
+Colors that exist only in dreams
+
+Click Generate and let AI do the magic!
+
+Copy the result with a single click
+
+Check if the backend is online using the built-in status indicator
+
+
+📧 Contact
+For feedback, questions, or suggestions, feel free to reach out:
+📬 thirishashalini12@gmail.com
+Or connect via GitHub Issues
